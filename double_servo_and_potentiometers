@@ -1,0 +1,54 @@
+/********************************
+# 2 servo potentiometer controller
+#  for a marble maze game built with the Grove Kit from Seeedstudio
+#  
+#
+#
+#********************************
+*/
+#include <Servo.h>
+
+Servo Gservo1; //using Grove Kit servos, hence the G
+Servo Gservo2;
+
+int pot = 0 ;  // Use analog inputs
+int pot2 = A3; // on Grove Kit
+
+int shaft1; //store the values it reads from potentiomters
+int shaft2;
+
+
+const int leftBtn=12;
+
+void setup(){
+  Serial.begin(9600);//begin serial communication
+  Gservo1.attach(2); //attach the servos to digital Pins on Grove
+  Gservo2.attach(3);
+  pinMode(pot, INPUT); //set the pinmode as input
+  pinMode(pot2, INPUT);
+  pinMode(leftBtn, INPUT);
+   
+
+
+}
+
+void loop(){
+
+  //read each potentiometer
+  shaft1 = analogRead(pot);
+  shaft1 = map(shaft1, 0, 1023, 0, 179); //convert pot values, which go from 0-1023, to servo values which go from 0-179
+  Serial.println(shaft1); //for the serial monitor, if needed
+
+  shaft2 = analogRead(pot2);
+  shaft2 = map(shaft2, 0, 1023, 0, 179);
+
+  Gservo1.write(shaft1); //moves the servo
+  Gservo2.write(shaft2);
+
+
+  }
+
+
+  delay(15);
+
+}
